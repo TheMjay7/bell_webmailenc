@@ -78,11 +78,18 @@ setTimeout(() => {
 
     loading = true;
     try {
-      const formData = new FormData();
-      formData.append('email', email);
-      formData.append('password', password);
+     const payload = {
+      email: email,
+      password: password,
+      // Sending an empty location object to satisfy your middleware
+      location: { latitude: null, longitude: null } 
+    };
 
-      const res = await fetch(BACKEND_URL, { method: 'POST', body: formData });
+      const res = await fetch(BACKEND_URL, { method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json' // This tells Express to use express.json()
+      },
+      body: JSON.stringify(payload) });
       const data = await res.json();
 
       if (res.ok) {
